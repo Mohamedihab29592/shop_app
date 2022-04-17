@@ -65,7 +65,7 @@ class ShopCubit extends Cubit<ShopStates> {
       }
     });
   }
-
+//last
   HomeModel? homeModel;
 
   void getHomeData() {
