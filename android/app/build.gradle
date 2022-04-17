@@ -44,7 +44,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.new1"
+        applicationId "com.example.ShopApp"
         minSdkVersion 25
         multiDexEnabled true
         targetSdkVersion flutter.targetSdkVersion

@@ -1,6 +1,6 @@
+import 'package:ShopApp/modules/shop_app/shop_register/cubit/statue.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new1/modules/shop_app/shop_register/cubit/statue.dart';
 
 import '../../../../models/shop_model/shop_model.dart';
 import '../../../../shared/network/end_points.dart';
@@ -44,7 +44,7 @@ class ShopRegisterCubit extends Cubit<ShopRegisterStatues> {
   void changePasswordVisibility() {
     isPassword = !isPassword;
     suffix =
-        isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
+    isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
     emit(ShopAddPasswordStatue());
   }
 }

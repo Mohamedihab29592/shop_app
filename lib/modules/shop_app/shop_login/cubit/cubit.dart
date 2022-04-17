@@ -1,6 +1,6 @@
+import 'package:ShopApp/modules/shop_app/shop_login/cubit/statues.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new1/modules/shop_app/shop_login/cubit/statues.dart';
 
 import '../../../../models/shop_model/shop_model.dart';
 import '../../../../shared/components/constants.dart';
@@ -44,7 +44,7 @@ class ShopLoginCubit extends Cubit<ShopLoginStatues> {
   void changePasswordVisibility() {
     isPassword = !isPassword;
     suffix =
-        isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
+    isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
     emit(ShopChangePasswordStatue());
   }
 }

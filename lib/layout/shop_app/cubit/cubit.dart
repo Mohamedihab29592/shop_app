@@ -1,7 +1,7 @@
+import 'package:ShopApp/layout/shop_app/cubit/statue.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new1/layout/shop_app/cubit/statue.dart';
 
 import '../../../models/shop_model/addressModels/address_model.dart';
 import '../../../models/shop_model/cartModels/addCartModel.dart';
@@ -42,30 +42,30 @@ class ShopCubit extends Cubit<ShopStates> {
   Map<int, dynamic> discount = {};
   HomeProductModel? homeProductModel;
 
-  void getDiscountData() {
-    emit(ShopDiscountState());
-    DioHelper.getData(
-      url: Home,
-      token: token,
-    ).then((value) {
-      if (discount.isNotEmpty) {
-        homeProductModel = HomeProductModel.fromJson(value.data);
-      }
-      if (kDebugMode) {
-        print('Discount ' + homeProductModel!.discount);
-      }
-      homeProductModel!.discount?.products.forEach((element) {
-        discount.addAll({element.id: element.discount});
-      });
-      emit(ShopDicountOkState());
-    }).catchError((error) {
-      emit(ShopDicountErrorState(error));
-      if (kDebugMode) {
-        print(error.toString());
-      }
-    });
-  }
-//last
+  // void getDiscountData() {
+  //   emit(ShopDiscountState());
+  //   DioHelper.getData(
+  //     url: Home,
+  //     token: token,
+  //   ).then((value) {
+  //     if (discount.isNotEmpty) {
+  //       homeProductModel = HomeProductModel.fromJson(value.data);
+  //     }
+  //     if (kDebugMode) {
+  //       print('Discount ' + homeProductModel!.discount);
+  //     }
+  //     homeProductModel!.discount?.products.forEach((element) {
+  //       discount.addAll({element.id: element.discount});
+  //     });
+  //     emit(ShopDicountOkState());
+  //   }).catchError((error) {
+  //     emit(ShopDicountErrorState(error));
+  //     if (kDebugMode) {
+  //       print(error.toString());
+  //     }
+  //   });
+  // }
+
   HomeModel? homeModel;
 
   void getHomeData() {
@@ -177,13 +177,13 @@ class ShopCubit extends Cubit<ShopStates> {
   void addNewOrder({int? addressId, context}) {
     emit(AddOrderLoadingState());
     DioHelper.postData(
-            url: Orders,
-            data: {
-              'address_id': addressId,
-              "payment_method": 1,
-              "use_points": false,
-            },
-            token: token)
+        url: Orders,
+        data: {
+          'address_id': addressId,
+          "payment_method": 1,
+          "use_points": false,
+        },
+        token: token)
         .then((value) {
       addOrderModel = AddOrderModel.fromJson(value.data);
       if (addOrderModel!.status) {
@@ -252,10 +252,9 @@ class ShopCubit extends Cubit<ShopStates> {
 
   ShopLoginModel? passwordModel;
 
-  void changePassword(
-      {required context,
-      required String currentPass,
-      required String newPass}) {
+  void changePassword({required context,
+    required String currentPass,
+    required String newPass}) {
     emit(ChangePassLoadingState());
     DioHelper.postData(url: 'change-password', token: token, data: {
       'current_password': currentPass,
@@ -446,17 +445,17 @@ class ShopCubit extends Cubit<ShopStates> {
     deleteAddresses = false;
     emit(AddAddressLoadingState());
     DioHelper.postData(
-            url: Address,
-            data: {
-              'name': name,
-              'city': city,
-              'region': region,
-              'details': details,
-              "latitude": 30.0616863,
-              "longitude": 31.3260088,
-              "notes": notes,
-            },
-            token: token)
+        url: Address,
+        data: {
+          'name': name,
+          'city': city,
+          'region': region,
+          'details': details,
+          "latitude": 30.0616863,
+          "longitude": 31.3260088,
+          "notes": notes,
+        },
+        token: token)
         .then((value) {
       changeAddressModel = ChangeAddressModel.fromJson(value.data);
       getAddresses();
@@ -499,17 +498,17 @@ class ShopCubit extends Cubit<ShopStates> {
     deleteAddresses = false;
     emit(UpdateAddressLoadingState());
     DioHelper.putData(
-            url: "addresses/$addressId",
-            data: {
-              'name': name,
-              'city': city,
-              'region': region,
-              'details': details,
-              "latitude": 30.0616863,
-              "longitude": 31.3260088,
-              "notes": notes
-            },
-            token: token)
+        url: "addresses/$addressId",
+        data: {
+          'name': name,
+          'city': city,
+          'region': region,
+          'details': details,
+          "latitude": 30.0616863,
+          "longitude": 31.3260088,
+          "notes": notes
+        },
+        token: token)
         .then((value) {
       changeAddressModel = ChangeAddressModel.fromJson(value.data);
       getAddresses();
@@ -691,7 +690,6 @@ class ShopCubit extends Cubit<ShopStates> {
       }
       emit(GetOrdersSuccessState(orderModel!));
       getOrdersDetails();
-      getDiscountData();
     }).catchError((error) {
       emit(GetOrdersErrorState(error));
       if (kDebugMode) {

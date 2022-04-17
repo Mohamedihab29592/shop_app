@@ -1,9 +1,9 @@
+import 'package:ShopApp/shared/cubit/cubit.dart';
+import 'package:ShopApp/shared/cubit/states.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new1/shared/cubit/cubit.dart';
-import 'package:new1/shared/cubit/states.dart';
 
 import 'layout/shop_app/cubit/cubit.dart';
 import 'layout/shop_app/shoplayout.dart';
