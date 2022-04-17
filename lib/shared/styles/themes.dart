@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class MyTheme{
+class MyTheme {
   static final darkTheme = ThemeData(
-
     scaffoldBackgroundColor: Colors.grey.shade900,
     textTheme: const TextTheme(
       bodyText1: TextStyle(
@@ -18,13 +17,12 @@ class MyTheme{
         height: 1.3,
       ),
     ),
-    colorScheme: ColorScheme.dark(primary: Colors.blue),
+    colorScheme: ColorScheme.dark(),
     primaryColor: Colors.black,
-    iconTheme: IconThemeData(color: Colors.blue,opacity: 0.8),
+    iconTheme: IconThemeData(color: Colors.purple.shade200, opacity: 0.8),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
-
-      selectedItemColor: Colors.blue,
+      selectedItemColor: Colors.purple.shade200,
       unselectedItemColor: Colors.grey,
       elevation: 20,
       backgroundColor: Colors.black12,
@@ -32,7 +30,8 @@ class MyTheme{
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.grey.shade900,
       elevation: 0,
-      titleTextStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+      titleTextStyle: TextStyle(
+          color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
       iconTheme: IconThemeData(
         color: Colors.white,
       ),
@@ -42,11 +41,9 @@ class MyTheme{
       ),
     ),
     fontFamily: 'jannah',
-
   );
 
-  static final lightTheme  = ThemeData(
-
+  static final lightTheme = ThemeData(
     textTheme: const TextTheme(
       bodyText1: TextStyle(
         fontSize: 18,
@@ -61,33 +58,29 @@ class MyTheme{
       ),
     ),
     scaffoldBackgroundColor: Colors.white,
-    colorScheme: ColorScheme.light(primary: Colors.blue),
+    colorScheme: ColorScheme.light(),
     primaryColor: Colors.white,
-    iconTheme: IconThemeData(color: Colors.blue,opacity: 0.8),
-
+    iconTheme: IconThemeData(color: Colors.purple.shade200, opacity: 0.8),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
-      selectedItemColor: Colors.blue,
-      unselectedItemColor: Colors.grey  ,
+      selectedItemColor: Colors.purple.shade200,
+      unselectedItemColor: Colors.grey,
       elevation: 20,
-      backgroundColor:Colors.white,
+      backgroundColor: Colors.white,
     ),
-
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.white,
       elevation: 0,
-      titleTextStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+      titleTextStyle: TextStyle(
+          color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
       iconTheme: IconThemeData(
         color: Colors.black,
       ),
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: Colors.white,
         statusBarIconBrightness: Brightness.dark,
-
       ),
-
     ),
     fontFamily: 'jannah',
   );
 }
-

@@ -1,108 +1,103 @@
-
-
-
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:bot_toast/bot_toast.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:socialApp/shared/cubit/cubit.dart';
-import 'package:socialApp/shared/cubit/states.dart';
-import 'package:socialApp/shared/styles/themes.dart';
+import 'package:new1/shared/cubit/cubit.dart';
+import 'package:new1/shared/cubit/states.dart';
 
-
-import 'layout/socialapp/cubit/cubit.dart';
-
-import 'layout/socialapp/sociallayout.dart';
-import 'modules/social_app/social_login/social_login_screen.dart';
-import 'modules/splashScreen/splashScreen.dart';
+import 'layout/shop_app/cubit/cubit.dart';
+import 'layout/shop_app/shoplayout.dart';
+import 'modules/shop_app/on_boarding/on_boarding.dart';
+import 'modules/shop_app/shop_login/cubit/cubit.dart';
+import 'modules/shop_app/shop_login/shop_login_screen.dart';
+import 'modules/shop_app/splashScreen/splashScreen.dart';
 import 'shared/bloc_observer.dart';
 import 'shared/components/constants.dart';
 import 'shared/network/local/cache_helper.dart';
 import 'shared/network/remote/dio_helper.dart';
+import 'shared/styles/themes.dart';
 
-
-
-
-void main() async
-{// be sure all methods finished  to run the app
+void main() async {
+  // be sure all methods finished  to run the app
   Bloc.observer = MyBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  await DioHelper.init();
+
+  DioHelper.init();
   await CacheHelper.init();
 
-  bool ? isDarkMode = CacheHelper.getData(key: 'isDarkMode');
+  bool? isDarkMode = CacheHelper.getData(key: 'isDarkMode');
 
   Widget widget;
+  bool? onBoarding = CacheHelper.getData(key: 'onBoarding');
+  token = CacheHelper.getData(key: 'token');
 
-  uId = CacheHelper.getData(key: 'uId');
-
-if(uId != null)
-  {
-    widget = SocialLayout();
+  if (onBoarding != null) {
+    if (token != null) {
+      widget = ShopLayoutScreen();
+    } else {
+      widget = ShopLoginScreen();
+    }
+  } else {
+    widget = OnBoardingScreen();
   }
-else{
-  widget=SocialLoginScreen();
-}
-  runApp(MyApp(isDarkMode, widget ,uId ));
+
+  runApp(MyApp(isDarkMode, widget, token));
 }
 
 // ignore: must_be_immutable
 class MyApp extends StatelessWidget {
+  bool? isDarkMode;
+  late final Widget startWidget;
+  String? token;
 
-    bool ? isDarkMode;
-    late final Widget startWidget;
-    String? uId;
-
-
-
-  MyApp(this.isDarkMode,this.startWidget, String? uId, {Key? key}) : super(key: key) ;
-
+  MyApp(this.isDarkMode, this.startWidget, String? token, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return MultiBlocProvider(
       providers: [
-
-        BlocProvider( create: (BuildContext context)  => AppCubit()..changeAppMode(fromShared: isDarkMode,),
-
+        BlocProvider(
+          create: (BuildContext context) => AppCubit()
+            ..changeAppMode(
+              fromShared: isDarkMode,
+            ),
         ),
-
-
-
-        BlocProvider( create: (BuildContext context)  => SocialCubit()..getUserData(uId).. getPosts()..getAllUsers(),
+        BlocProvider(
+          create: (BuildContext context) => ShopLoginCubit(),
         ),
-
-    ],
+        BlocProvider(
+          create: (BuildContext context) => ShopCubit()
+            ..getHomeData()
+            ..getCategoryData()
+            ..getFavoriteData()
+            ..getProfileData()
+            ..getCartData()
+            ..getAddresses()
+            ..getOrders(),
+        ),
+      ],
       child: BlocConsumer<AppCubit, AppStates>(
-        listener: (context, state){},
-        builder: (context ,state){
+        listener: (context, state) {},
+        builder: (context, state) {
           return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                themeMode:  AppCubit.get(context).isDarkMode ? ThemeMode.dark: ThemeMode.light,
+            debugShowCheckedModeBanner: false,
+            themeMode: AppCubit.get(context).isDarkMode
+                ? ThemeMode.dark
+                : ThemeMode.light,
             home: AnimatedSplashScreen(
               splash: SplashScreen(),
               nextScreen: startWidget,
               splashIconSize: 700,
-
               animationDuration: const Duration(milliseconds: 2000),
               splashTransition: SplashTransition.fadeTransition,
             ),
-            darkTheme: MyTheme.darkTheme ,
             theme: MyTheme.lightTheme,
-
-                 builder: BotToastInit(),
-                 navigatorObservers: [BotToastNavigatorObserver()],
-
-
-              );
-            },
-
-
-
-
+            darkTheme: MyTheme.darkTheme,
+            builder: BotToastInit(),
+            navigatorObservers: [BotToastNavigatorObserver()],
+          );
+        },
       ),
     );
   }
