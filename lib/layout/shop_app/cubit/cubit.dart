@@ -41,30 +41,31 @@ class ShopCubit extends Cubit<ShopStates> {
   Map<dynamic, dynamic> cart = {};
   Map<int, dynamic> discount = {};
   HomeProductModel? homeProductModel;
+  HomeProductModel? discountProductModel;
 
-  // void getDiscountData() {
-  //   emit(ShopDiscountState());
-  //   DioHelper.getData(
-  //     url: Home,
-  //     token: token,
-  //   ).then((value) {
-  //     if (discount.isNotEmpty) {
-  //       homeProductModel = HomeProductModel.fromJson(value.data);
-  //     }
-  //     if (kDebugMode) {
-  //       print('Discount ' + homeProductModel!.discount);
-  //     }
-  //     homeProductModel!.discount?.products.forEach((element) {
-  //       discount.addAll({element.id: element.discount});
-  //     });
-  //     emit(ShopDicountOkState());
-  //   }).catchError((error) {
-  //     emit(ShopDicountErrorState(error));
-  //     if (kDebugMode) {
-  //       print(error.toString());
-  //     }
-  //   });
-  // }
+  void getDiscountData() {
+    emit(ShopDiscountState());
+    DioHelper.getData(
+      url: Home,
+      token: token,
+    ).then((value) {
+      if (discount != 0) {
+        discountProductModel = HomeProductModel.fromJson(value.data);
+      }
+      if (kDebugMode) {
+        print('Discount ' + discountProductModel!.discount);
+      }
+      discountProductModel!.discount?.products.forEach((element) {
+        discount.addAll({element.id: element.discount});
+      });
+      emit(ShopDicountOkState());
+    }).catchError((error) {
+      emit(ShopDicountErrorState(error));
+      if (kDebugMode) {
+        print(error.toString());
+      }
+    });
+  }
 
   HomeModel? homeModel;
 
@@ -83,6 +84,7 @@ class ShopCubit extends Cubit<ShopStates> {
       for (var element in homeModel!.data.products) {
         cart.addAll({element.id: element.inCart});
       }
+      getDiscountData();
       emit(ShopSuccessHomeState());
     }).catchError((error) {
       emit(ShopErrorHomeState(error));
