@@ -57,7 +57,7 @@ class MyTheme {
         height: 1.3,
       ),
     ),
-    scaffoldBackgroundColor: Colors.white,
+      scaffoldBackgroundColor: Colors.white,
     colorScheme: ColorScheme.light(),
     primaryColor: Colors.white,
     iconTheme: IconThemeData(color: Colors.purple.shade200, opacity: 0.8),

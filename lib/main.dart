@@ -92,8 +92,8 @@ class MyApp extends StatelessWidget {
               animationDuration: const Duration(milliseconds: 2000),
               splashTransition: SplashTransition.fadeTransition,
             ),
-            theme: MyTheme.lightTheme,
-            darkTheme: MyTheme.darkTheme,
+            theme: MyTheme.darkTheme,
+            darkTheme: MyTheme.lightTheme,
             builder: BotToastInit(),
             navigatorObservers: [BotToastNavigatorObserver()],
           );

@@ -1,14 +1,11 @@
-//d
+
 
 import 'package:bot_toast/bot_toast.dart';
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:gradients/gradients.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../layout/shop_app/cubit/cubit.dart';
 import '../../modules/shop_app/product_details/productDeatils.dart';
-import '../cubit/cubit.dart';
 import '../styles/color.dart';
 
 Widget defaultButton({
@@ -111,100 +108,8 @@ Widget defaultTextButton({
       ),
     );
 
-Widget buildTaskItem(Map model, context) => Dismissible(
-      key: Key(model['id'].toString()),
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Row(children: [
-          CircleAvatar(
-            radius: 40,
-            child: Text(
-              '${model['time']}',
-            ),
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-          Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${model['title']}',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  '${model['date']}',
-                  style: const TextStyle(
-                    color: Colors.grey,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-          IconButton(
-            onPressed: () {
-              AppCubit.get(context).updateData(status: 'done', id: model['id']);
-            },
-            icon: const Icon(
-              Icons.check_box,
-              color: Colors.green,
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              AppCubit.get(context)
-                  .updateData(status: 'archive', id: model['id']);
-            },
-            icon: const Icon(
-              Icons.archive,
-              color: Colors.black45,
-            ),
-          )
-        ]),
-      ),
-      onDismissed: (direction) {
-        AppCubit.get(context).deleteData(
-          id: model['id'],
-        );
-      },
-    );
 
-Widget tasksBuilder({
-  required List<Map> tasks,
-}) =>
-    ConditionalBuilder(
-      condition: tasks.length > 0,
-      builder: (context) => ListView.separated(
-        itemBuilder: (context, index) => buildTaskItem(tasks[index], context),
-        separatorBuilder: (context, index) => myDivider(),
-        itemCount: tasks.length,
-      ),
-      fallback: (context) => Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.edit,
-              size: 100,
-              color: Colors.grey,
-            ),
-            const Text('No Tasks PLease add some Tasks',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                )),
-          ],
-        ),
-      ),
-    );
+
 
 Widget myDivider() => Padding(
       padding: const EdgeInsets.all(20.0),
@@ -215,79 +120,7 @@ Widget myDivider() => Padding(
       ),
     );
 
-Widget buildArticleItem(article, context) => InkWell(
-      onTap: () {
-        navigateTo(
-          context,
-          WebView(initialUrl: article['url']),
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Row(
-          children: [
-            Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  10.0,
-                ),
-                image: DecorationImage(
-                  image: NetworkImage('${article['urlToImage']}'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 20,
-            ),
-            Expanded(
-              child: Container(
-                height: 120,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        '${article['title']}',
-                        style: Theme.of(context).textTheme.bodyText1,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    Text(
-                      '${article['publishedAt']}',
-                      style: const TextStyle(
-                        color: Colors.grey,
 
-                        //fontSize: 18,
-
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-
-Widget articleBuilder(list, context, {isSearch = false}) => ConditionalBuilder(
-      condition: list.length > 0,
-      builder: (context) => ListView.separated(
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, index) => buildArticleItem(list[index], context),
-        separatorBuilder: (context, index) => myDivider(),
-        itemCount: 10,
-      ),
-      fallback: (context) => isSearch
-          ? Container()
-          : const Center(child: CircularProgressIndicator()),
-    );
 
 // ignore: non_constant_identifier_names
 void navigateTo(context, Widget) => Navigator.push(
