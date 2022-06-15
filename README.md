@@ -1,5 +1,5 @@
 # Shop App
-
+## Bloc, Provider , Cubit, Dark mode, Login , API 
 
 ![1](https://user-images.githubusercontent.com/64233832/173688307-5d0133f3-b5f4-4ff3-90ce-b455fe372b10.PNG)
 ![2](https://user-images.githubusercontent.com/64233832/173688314-d3694239-c314-4070-8025-86b6a53dc0dc.PNG)
